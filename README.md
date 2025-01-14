@@ -22,3 +22,9 @@ The following requirements must be met to receive full credit on this assignment
 Your solution will be tested against various test cases including edge cases, invalid inputs, and all four arithmetic operations.
 
  -->
+
+ # Binary Calculator
+
+This project is a binary calculator. The code works by having three given arguemnts, the first two being numbers in binary notation, and additionally one of the four operations (addition, subtraction, multiplication, and division). Once these inputs are given an output of the calculated binary number will be given, however there are exceptions to this calculator. This calculator operates in 8 bits meaning it will not given a negative or output greater than 255. Furthermore, if any number is not given in binay notation or the second number is zero and being divided, the calculator will return "Error" or "Nan". 
+
+
