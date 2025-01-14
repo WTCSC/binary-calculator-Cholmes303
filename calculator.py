@@ -1,16 +1,15 @@
-# Timer for funsies
-import time
-
 # Calculator for binary numbers
 def binary_calculator(bin1, bin2, operator):
     
-    # Checks each given arguement to be binary
+    # Checks each given arguement to be binary.
     for character in bin1, bin2:
-        if character == "0" or "1":
-            pass
-        else:
+        if character != "0" or "1":
             return "Error"
     
+    # Checks for dividing by 0.
+    if bin2 == "0" and operator == "/":
+        return "Nan"
+
     # Adds extra zeros to given binary digits to ensure all values are 8 bit.
     if len(bin1) < 8:
         bin1 = bin1.zfill(8)
@@ -29,42 +28,35 @@ def binary_calculator(bin1, bin2, operator):
         if value == "1":
             decimal_bin2 += 2 ** (7 - index)
     
-    # Variable for output.
-    answer = 0
+    # Decimal value of both binary numbers.
+    decimal_value = 0
 
-    # If statements for all operator usage.
+    # Checks the given operator and performs the calculation.
     if operator == "+":
-        answer += decimal_bin1 + decimal_bin2
+        decimal_value += decimal_bin1 + decimal_bin2
 
     if operator == "-":
-        answer += decimal_bin1 - decimal_bin2
+        decimal_value += decimal_bin1 - decimal_bin2
 
     if operator == "*":
-        answer += decimal_bin1 * decimal_bin2
+        decimal_value += decimal_bin1 * decimal_bin2
     
     if operator == "/":
-        answer += decimal_bin1 / decimal_bin2
+        decimal_value += decimal_bin1 / decimal_bin2
 
+    # Checks if the decimal value is within the 8 bit range.
+    if 0 > decimal_value > 255:
+        return "Overflow"
 
-    output = []
+    output = ""
+
     bit_8 = [128, 64, 32, 16, 8, 4, 2, 1]
-
-    for x in bit_8:
-        if (answer / x) >= 1:
-            output.append("1")
-        elif (answer / x) <= 1:
-            output.append("0")
-    output = ''.join(output)
-        
-    print(output)
-    #print(decimal_bin1, decimal_bin2)
     
-
-#binary_calculator("0001", "0011", "+")
-
-if __name__ == "__main__":
-    start_time = time.time()
-    print(binary_calculator("1010", "0101", "+"))
-    end_time = time.time()
-    execution_time = end_time - start_time
-    print(f"Execution time: {execution_time:.10f} seconds")
+    # Converts the decimal value back to binary.
+    for bit in bit_8:
+        if decimal_value >= bit:
+            output += "1"
+            decimal_value -= bit
+        else:
+            output += "0"
+    return(output)
