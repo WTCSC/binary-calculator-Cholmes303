@@ -2,14 +2,13 @@
 def binary_calculator(bin1, bin2, operator):
     
     # Checks each given arguement to be binary.
-    for character in bin1, bin2:
-        if character != "0" or "1":
+    for character in bin1:
+        if character not in ["0", "1"]: 
+            return "Error"
+    for character in bin2:
+        if character not in ["0", "1"]:
             return "Error"
     
-    # Checks for dividing by 0.
-    if bin2 == "0" and operator == "/":
-        return "Nan"
-
     # Adds extra zeros to given binary digits to ensure all values are 8 bit.
     if len(bin1) < 8:
         bin1 = bin1.zfill(8)
@@ -35,17 +34,19 @@ def binary_calculator(bin1, bin2, operator):
     if operator == "+":
         decimal_value += decimal_bin1 + decimal_bin2
 
-    if operator == "-":
+    elif operator == "-":
         decimal_value += decimal_bin1 - decimal_bin2
 
-    if operator == "*":
+    elif operator == "*":
         decimal_value += decimal_bin1 * decimal_bin2
     
-    if operator == "/":
+    elif operator == "/":
+        if decimal_bin2 == 0:
+            return "Nan"
         decimal_value += decimal_bin1 / decimal_bin2
 
     # Checks if the decimal value is within the 8 bit range.
-    if 0 > decimal_value > 255:
+    if decimal_value < 0 or decimal_value > 255:
         return "Overflow"
 
     output = ""
